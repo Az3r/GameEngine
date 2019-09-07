@@ -1,8 +1,8 @@
-﻿using System;
+﻿using GameEngine.Exception;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using GameEngine.Exception;
 namespace GameEngine.Input
 {
     public class Mouse
@@ -67,7 +67,12 @@ namespace GameEngine.Input
         {
             Delta = 0;
             foreach (MouseButtons key in SupportedButtons)
-                if (MouseBuffer[key] == ButtonState.Released) MouseBuffer[key] = ButtonState.None;
+            {
+                if (MouseBuffer[key] == ButtonState.Released)
+                {
+                    MouseBuffer[key] = ButtonState.None;
+                }
+            }
         }
         public ButtonState GetStates(MouseButtons buttons) => MouseBuffer[buttons];
         public bool IsReleased(MouseButtons buttons)
@@ -90,7 +95,11 @@ namespace GameEngine.Input
 
         public bool QueueEvents(MouseEventArgs e)
         {
-            if (EventsBuffer.Count >= MAX_EVENT_BUFFER_SIZE) return false;
+            if (EventsBuffer.Count >= MAX_EVENT_BUFFER_SIZE)
+            {
+                return false;
+            }
+
             EventsBuffer.Enqueue(e);
             return true;
         }

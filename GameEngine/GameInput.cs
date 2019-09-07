@@ -1,5 +1,5 @@
-﻿using System;
-using GameEngine.Input;
+﻿using GameEngine.Input;
+using System;
 using System.Windows.Forms;
 
 namespace GameEngine

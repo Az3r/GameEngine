@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GameEngine.Exception;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using GameEngine.Exception;
 
 namespace GameEngine.Input
 {
@@ -15,7 +15,9 @@ namespace GameEngine.Input
         {
             KeysBuffer = new List<Key>(256);
             for (int i = 0; i < KeysBuffer.Capacity; ++i)
+            {
                 KeysBuffer.Add(new Key(i, KeyStates.None));
+            }
 
             EventsBuffer = new Queue<KeyEventArgs>();
             Converter = new KeysConverter();
@@ -47,9 +49,18 @@ namespace GameEngine.Input
         public KeyStates GetKeyState(Keys key)
         {
             Key bufferKey = KeysBuffer[(int)key];
-            if (bufferKey.Down) return KeyStates.Down;
-            else if (bufferKey.Released) return KeyStates.Released;
-            else return KeyStates.None;
+            if (bufferKey.Down)
+            {
+                return KeyStates.Down;
+            }
+            else if (bufferKey.Released)
+            {
+                return KeyStates.Released;
+            }
+            else
+            {
+                return KeyStates.None;
+            }
         }
         /// <summary>
         /// set any keys whose state is <see cref="KeyStates.Released"/> to <see cref="KeyStates.None"/>
@@ -57,7 +68,12 @@ namespace GameEngine.Input
         private void ClearReleasedState()
         {
             for (int i = 0; i < KeysBuffer.Count; ++i)
-                if (KeysBuffer[i].Released) KeysBuffer[i].SetFalse();
+            {
+                if (KeysBuffer[i].Released)
+                {
+                    KeysBuffer[i].SetFalse();
+                }
+            }
         }
         protected virtual void OnKeyDown(KeyEventArgs e)
         {
@@ -101,7 +117,11 @@ namespace GameEngine.Input
         private readonly KeysConverter Converter;
         public bool QueueEvents(KeyEventArgs e)
         {
-            if (EventsBuffer.Count >= MAX_EVENT_BUFFER_SIZE) return false;
+            if (EventsBuffer.Count >= MAX_EVENT_BUFFER_SIZE)
+            {
+                return false;
+            }
+
             EventsBuffer.Enqueue(e);
             return true;
         }

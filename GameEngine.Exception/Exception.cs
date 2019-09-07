@@ -1,5 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 namespace GameEngine.Exception
 {
     public static class GameException

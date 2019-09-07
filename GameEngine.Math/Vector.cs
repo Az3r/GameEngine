@@ -39,7 +39,11 @@ namespace GameEngine.Math
         }
         public override bool Equals(object obj)
         {
-            if (obj == null || obj.GetType() != GetType()) return false;
+            if (obj == null || obj.GetType() != GetType())
+            {
+                return false;
+            }
+
             Vector2 vec = (Vector2)obj;
             return Equals(vec);
         }
@@ -84,6 +88,8 @@ namespace GameEngine.Math
         public static Vector2 operator -(in Vector2 vec) => vec.Opposite();
         public static Vector2 operator -(in Vector2 left, in Vector2 right) => left.Add(right.Opposite());
         public static float operator *(in Vector2 left, in Vector2 right) => (float)left.DotProduct(right);
+        public static Vector2 operator *(in Vector2 vec, float multiplier) => vec.Scale(multiplier);
+        public static Vector2 operator /(in Vector2 vec, float divisor) => vec.Scale(1f / divisor);
         public static bool operator ==(in Vector2 left, in Vector2 right) => left.Equals(right);
         public static bool operator !=(in Vector2 left, in Vector2 right) => !left.Equals(right);
 
